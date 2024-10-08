@@ -1,7 +1,6 @@
-
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -27,33 +26,33 @@
 </div>
 <ul class="nav justify-content-end">
     <li class="nav-item">
-        <a class="nav-link" href="#">Link</a>
+        <a class="nav-link" href="<c:url value="/login"/> ">Login</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="#">Link</a>
+        <a class="nav-link" href="<c:url value="/register"/>">Register</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="#">Link</a>
+        <a class="nav-link" href="<c:url value="/about"/>">About us</a>
     </li>
-    <li class="nav-item">
-        <a class="nav-link disabled" href="#">Disabled</a>
-    </li>
+    <%--    <li class="nav-item">--%>
+    <%--        <a class="nav-link disabled" href="#">Disabled</a>--%>
+    <%--    </li>--%>
 </ul>
 <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
-    <a class="navbar-brand" href="<c:url value="/" /> ">Naver</a>
+    <a class="navbar-brand" href="<c:url value="/" /> ">Navbar</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
         <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="collapsibleNavbar">
         <ul class="navbar-nav">
             <li class="nav-item">
-                <a class="nav-link" href="<c:url value="/js"/> ">JS</a>
+                <a class="nav-link" href="<c:url value="/js" /> ">JS</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="<c:url value="/ajax"/>">AJAX</a>
+                <a class="nav-link" href="<c:url value="/ajax"/> ">AJAX</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="<c:url value="/map"/>">Map</a>
+                <a class="nav-link" href="<c:url value="/map"/> ">Map</a>
             </li>
         </ul>
     </div>
@@ -66,7 +65,7 @@
                 <jsp:include page="left.jsp"/>
             </c:when>
             <c:otherwise>
-                <jsp:include page="${left}.jps"/>
+                <jsp:include page="${left}.jsp"/>
             </c:otherwise>
         </c:choose>
         <c:choose>
@@ -74,7 +73,7 @@
                 <jsp:include page="center.jsp"/>
             </c:when>
             <c:otherwise>
-                <jsp:include page="${center}.jps"/>
+                <jsp:include page="${center}.jsp"/>
             </c:otherwise>
         </c:choose>
     </div>
