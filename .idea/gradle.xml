@@ -4,20 +4,20 @@
   <component name="GradleSettings">
     <option name="linkedExternalProjectsSettings">
       <GradleProjectSettings>
+        <option name="externalProjectPath" value="$PROJECT_DIR$/admin" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$/admin" />
+          </set>
+        </option>
+      </GradleProjectSettings>
+      <GradleProjectSettings>
         <option name="delegatedBuild" value="false" />
         <option name="testRunner" value="PLATFORM" />
         <option name="externalProjectPath" value="$PROJECT_DIR$/day02" />
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$/day02" />
-          </set>
-        </option>
-      </GradleProjectSettings>
-      <GradleProjectSettings>
-        <option name="externalProjectPath" value="$PROJECT_DIR$/day02-1" />
-        <option name="modules">
-          <set>
-            <option value="$PROJECT_DIR$/day02-1" />
           </set>
         </option>
       </GradleProjectSettings>
@@ -42,6 +42,24 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$/day03_1" />
+          </set>
+        </option>
+      </GradleProjectSettings>
+      <GradleProjectSettings>
+        <option name="externalProjectPath" value="$PROJECT_DIR$/day03_iot" />
+        <option name="gradleHome" value="" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$/day03_iot" />
+          </set>
+        </option>
+      </GradleProjectSettings>
+      <GradleProjectSettings>
+        <option name="externalProjectPath" value="$PROJECT_DIR$/day03_iot2" />
+        <option name="gradleHome" value="" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$/day03_iot2" />
           </set>
         </option>
       </GradleProjectSettings>

@@ -21,6 +21,7 @@ public class JsController {
 
     @RequestMapping("/js1")
     public String js1(Model model) {
+
         model.addAttribute("left", dir + "left");
         model.addAttribute("center",dir + "js1");
         return "index";
@@ -37,6 +38,25 @@ public class JsController {
     public String js3(Model model) {
         model.addAttribute("left", dir + "left");
         model.addAttribute("center",dir + "js3");
+        return "index";
+    }
+    @RequestMapping("/js4")
+    public String js4(Model model) {
+        model.addAttribute("left", dir + "left");
+        model.addAttribute("center",dir + "js4");
+        return "index";
+    }
+    @RequestMapping("/js5")
+    public String js5(Model model) {
+        model.addAttribute("left", dir + "left");
+        model.addAttribute("center",dir + "js5");
+        return "index";
+    }
+
+    @RequestMapping("/js6")
+    public String js6(Model model) {
+        model.addAttribute("left", dir + "left");
+        model.addAttribute("center",dir + "js6");
         return "index";
     }
 

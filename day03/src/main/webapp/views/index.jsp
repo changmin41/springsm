@@ -8,9 +8,28 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+<%--   css나 자바스크립트를 외부문서로 빼는 것--%>
+    <script src="<c:url value="/js/index.js"/> "></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></SCRIPT><%--  나는 지금부터 j쿼리를 쓸거야 라는 뜻 --%>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+<%--카카오맵 API--%>
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=baae53e1c8a3ef105c8b6fc8ca65c07d"></script>
+    <%--하이트차트라이브러리 start--%>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/export-data.js"></script>
+    <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+    <%--하이트차트라이브러리 end--%>
+
+
+
+    <%-- fontawesome ICON  --%>
+    <script src="https://kit.fontawesome.com/6826725677.js" crossorigin="anonymous"></script>
+    <%-- fontawesome ICON  --%>
+
+
     <style>
         .fakeimg {
             height: 200px;
@@ -22,18 +41,35 @@
 
 <div class="jumbotron text-center" style="margin-bottom:0">
     <h1>My First Bootstrap 4 Page</h1>
+
+    <img src="<c:url value='/img/sm.jpg'/>">
+    <img src="<c:url value='/imgs/car.jpg'/>">
+
     <p>Resize this responsive page to see the effect!</p>
 </div>
 <ul class="nav justify-content-end">
-    <li class="nav-item">
-        <a class="nav-link" href="<c:url value="/login"/> ">Login</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" href="<c:url value="/register"/>">Register</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" href="<c:url value="/about"/>">About us</a>
-    </li>
+    <c:choose>
+        <c:when test="${sessionScope.loginid == null}">
+            <li class="nav-item">
+                <a class="nav-link" href="<c:url value="/login"/> ">Login</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="<c:url value="/register"/>">Register</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="<c:url value="/about"/>">About us</a>
+            </li>
+        </c:when>
+        <c:otherwise>
+            <li class="nav-item">
+                <a class="nav-link" href="#">${sessionScope.loginid.custId}</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="<c:url value="/logoutimpl"/>">Logout</a>
+            </li>
+        </c:otherwise>
+    </c:choose>
+
     <%--    <li class="nav-item">--%>
     <%--        <a class="nav-link disabled" href="#">Disabled</a>--%>
     <%--    </li>--%>
@@ -54,6 +90,21 @@
             <li class="nav-item">
                 <a class="nav-link" href="<c:url value="/map"/> ">Map</a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" href="<c:url value="/chart"/> ">Chart</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="<c:url value="/car"/> ">Car</a>
+            </li>
+
+            <c:if test="${sessionScope.loginid != null}">
+                <li class="nav-item">
+                    <a class="nav-link" href="<c:url value="/cust"/> ">Cust</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="<c:url value="/item"/> ">Item</a>
+                </li>
+            </c:if>
         </ul>
     </div>
 </nav>
