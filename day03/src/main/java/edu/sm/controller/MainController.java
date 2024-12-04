@@ -1,16 +1,48 @@
 package edu.sm.controller;
 
+import edu.sm.app.dto.OcrDto;
+import edu.sm.util.FileUploadUtil;
+import edu.sm.util.OCRUtil;
+import edu.sm.util.WeatherUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.ParseException;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.io.IOException;
+import java.util.Map;
 
 @Controller
 @Slf4j
 public class MainController {
+    @Value("${app.key.wkey}")
+    String wkey;
+
+    @Value("${app.key.owkey}")
+    String owkey;
+
+    @Value("${app.url.server-url}")
+    String serverurl;
+
+    @Value("${app.dir.uploadimgdir}")
+    String uploadImgDir;
+
+
     @RequestMapping("/")
     public String main(Model model) {
         log.info("Start Main ,,,,,,");
+        return "index";
+    }
+
+    @RequestMapping("/webrtc")
+    public String webrtc(Model model) {
+        model.addAttribute("serverurl", "serverurl");
+        model.addAttribute("roomId", "1"); //하드코딩된 roomId
+        model.addAttribute("center", "webrtc");
         return "index";
     }
 
@@ -32,6 +64,60 @@ public class MainController {
         return "index";
     }
 
+    @RequestMapping("/webcam")
+    public String webcam(Model model) {
+        model.addAttribute("center", "webcam");
+        return "index";
+    }
 
+    @RequestMapping("/wh")
+    @ResponseBody //화면이 아니라 데이터를 전송할 수 있다.
+    public Object wh(Model model) throws IOException, ParseException {
+        return WeatherUtil.getWeather("108",wkey);
+    }
+
+    @RequestMapping("/owh")
+    @ResponseBody //화면이 아니라 데이터를 전송할 수 있다.
+    public Object owh(Model model) throws IOException, ParseException {
+        return WeatherUtil.getWeather2("1835848",owkey);
+    }
+
+    @RequestMapping("/websocket")
+    public String websocket(Model model) {
+        model.addAttribute("serverurl", serverurl);
+        model.addAttribute("center", "websocket");
+        return "index";
+    }
+
+    @RequestMapping("/chat")
+    public String chat(Model model) {
+        model.addAttribute("serverurl", serverurl);
+        model.addAttribute("center", "chat");
+        return "index";
+    }
+
+    @RequestMapping("/ocr")
+    public String ocr(Model model){
+        model.addAttribute("center","ocr");
+        return "index";
+    }
+    @RequestMapping("/ocrimpl")
+    public String ocrimpl(Model model, OcrDto ocrDto) throws IOException {
+        String imgname = ocrDto.getImage().getOriginalFilename();
+
+        FileUploadUtil.saveFile(ocrDto.getImage(), uploadImgDir);
+        JSONObject jsonObject = OCRUtil.getResult(uploadImgDir, imgname);
+        Map<String, String> map = OCRUtil.getData(jsonObject);
+
+        model.addAttribute("result",map);
+        model.addAttribute("imgname",imgname);
+        model.addAttribute("center","ocr");
+        return "index";
+    }
+    @RequestMapping("/chatbot")
+    public String chatbot(Model model) {
+        model.addAttribute("center", "chatbot");
+        return "index";
+    }
 
 }

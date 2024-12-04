@@ -1,0 +1,54 @@
+# 1. Tomcat Server Setting
+server:
+  port: 80
+  servlet:
+    encoding:
+      charset: UTF-8
+      force: true
+
+# 2. SpringBoot Environment Setting
+spring:
+  mvc:
+    view:
+      prefix: /views/
+      suffix: .jsp
+  datasource:
+    # 마이바티스 로그찍으려고 씀
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://223.130.152.91:3306/smdb?characterEncoding=utf8
+    username: smuser
+    password: Sum1212!!
+
+# 3. Mybatis Setting
+mybatis:
+  type-aliases-package: edu.sm.app.dto
+  mapper-locations: classpath:/mapper/*.xml
+  configuration:
+    map-underscore-to-camel-case: true
+# 4. Logging Setting
+logging:
+  level:
+    root: info
+  #  error > info > debug
+
+# 5. Application Environment Setting
+app:
+  url:
+    #    server-url: http://210.119.34.210:81
+    #    server-url: http://127.0.0.1:81
+    #    server-url: http://210.119.34.77:81
+    #웹소켓 접속을 위한 url
+    server-url: http://223.130.150.171:8080
+  dir:
+    # 이미지 로그를 남기려고
+    imgdir: root/imgs/
+    uploadimgdir: root/imgs/
+    logdir: root/logs/
+    readlogdir: root/logs/
+  key:
+    # 날씨 정보 띄우기 위해
+    wkey: ENC(JW2uE1i4P4mTIM72IDJHSb7Js46D5ZJcXsNYuCBu53BM+kYUoE7Apw1heTs81yd/pyDkNs8ZATDli/ZwjEBSbttHzrpk9BeKicY/5gDRfwUNRmrEi3aokLF04i4gpleNFvee1GS90mZfiDXAV4OraA==)
+    owkey: db478abd8a74d454ab2148f9a0c921bc
+    wkey2: ENC(AGzLAgsPMOJE5zDYsXEricMGvjB/S1GVF2ZFRTuO9qjnlj/sMv6d/xF0pAuzWJkn)
+    algo: PBEWithMD5AndDES
+    skey: mykey

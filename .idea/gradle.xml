@@ -46,20 +46,10 @@
         </option>
       </GradleProjectSettings>
       <GradleProjectSettings>
-        <option name="externalProjectPath" value="$PROJECT_DIR$/day03_iot" />
-        <option name="gradleHome" value="" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/day06" />
         <option name="modules">
           <set>
-            <option value="$PROJECT_DIR$/day03_iot" />
-          </set>
-        </option>
-      </GradleProjectSettings>
-      <GradleProjectSettings>
-        <option name="externalProjectPath" value="$PROJECT_DIR$/day03_iot2" />
-        <option name="gradleHome" value="" />
-        <option name="modules">
-          <set>
-            <option value="$PROJECT_DIR$/day03_iot2" />
+            <option value="$PROJECT_DIR$/day06" />
           </set>
         </option>
       </GradleProjectSettings>

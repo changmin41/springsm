@@ -1,5 +1,9 @@
 package edu.sm.app.service;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
+import edu.sm.app.dto.CustDto;
 import edu.sm.app.dto.ItemDto;
+import edu.sm.app.dto.Search;
 import edu.sm.app.frame.SMService;
 import edu.sm.app.repository.ItemRepository;
 import lombok.RequiredArgsConstructor;
@@ -15,6 +19,7 @@ public class ItemService implements SMService<Integer, ItemDto> {
 
     @Override
     public void add(ItemDto itemDto) throws Exception {
+
         itemRepository.insert(itemDto);
     }
 
@@ -40,5 +45,15 @@ public class ItemService implements SMService<Integer, ItemDto> {
 
     public List<ItemDto> findByName(String name) throws Exception {
         return itemRepository.findByName(name);
+    }
+
+    public Page<ItemDto> getPage(int pageNo) throws Exception {
+        PageHelper.startPage(pageNo, 5); // 3: 한화면에 출력되는 개수
+        return itemRepository.getpage();
+    }
+
+    public Page<ItemDto> getFindPage(int pageNo, Search search) throws Exception {
+        PageHelper.startPage(pageNo, 5); // 5: 한화면에 출력되는 개수
+        return itemRepository.getfindpage(search);
     }
 }

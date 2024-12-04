@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 
 <!DOCTYPE html>
 <html lang="ko">
@@ -8,43 +9,103 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
-<%--   css나 자바스크립트를 외부문서로 빼는 것--%>
     <script src="<c:url value="/js/index.js"/> "></script>
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=4d6c420f59edfb20579ef2824075540b"></script>
 
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></SCRIPT><%--  나는 지금부터 j쿼리를 쓸거야 라는 뜻 --%>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
-<%--카카오맵 API--%>
-    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=baae53e1c8a3ef105c8b6fc8ca65c07d"></script>
-    <%--하이트차트라이브러리 start--%>
+
+    <%--HighCharts Lib  start --%>
     <script src="https://code.highcharts.com/highcharts.js"></script>
     <script src="https://code.highcharts.com/modules/exporting.js"></script>
     <script src="https://code.highcharts.com/modules/export-data.js"></script>
     <script src="https://code.highcharts.com/modules/accessibility.js"></script>
-    <%--하이트차트라이브러리 end--%>
+    <%--HighCharts Lib  end --%>
 
-
-
-    <%-- fontawesome ICON  --%>
-    <script src="https://kit.fontawesome.com/6826725677.js" crossorigin="anonymous"></script>
-    <%-- fontawesome ICON  --%>
-
+    <%-- Web Socket Lib    --%>
+    <script src="/webjars/sockjs-client/sockjs.min.js"></script>
+    <script src="/webjars/stomp-websocket/stomp.min.js"></script>
 
     <style>
         .fakeimg {
             height: 200px;
             background: #aaa;
         }
+        .fakeimg {
+            height: 200px;
+            background: #aaa;
+        }
+        #scroll-btn {
+            opacity: 0;
+            width: 50px;
+            height: 50px;
+            color: #fff;
+            background-color: #ef476f;
+            position: fixed;
+            bottom: 13%;
+            right: 10%;
+            border: 2px solid #fff;
+            border-radius: 50%;
+            font: 2px monospace;
+            transition: opacity 2s, transform 2s;
+        }
+        #scroll-btn.show {
+            opacity: 1;
+            transition: opacity 5s, transform 5s;
+        }
+        #scroll-btn2 {
+            opacity: 0;
+            width: 50px;
+            height: 50px;
+            color: #fff;
+            background-color: #ef476f;
+            position: fixed;
+            bottom: 5%;
+            right: 10%;
+            border: 2px solid #fff;
+            border-radius: 50%;
+            font: bold 10px monospace;
+            transition: opacity 2s, transform 2s;
+        }
+        #scroll-btn2.show {
+            opacity: 1;
+            transition: opacity 5s, transform 5s;
+        }
     </style>
+    <script>
+        let chatbtn = {
+            init:function(){
+                const scrollBtn = document.createElement("button");
+                scrollBtn.innerHTML = "chatbot";
+                scrollBtn.setAttribute("id", "scroll-btn");
+                document.body.appendChild(scrollBtn);
+                scrollBtn.classList.add("show");
+                scrollBtn.addEventListener("click", function(){
+                    location.href='<c:url value="/chatbot"/>';
+                });
+                const scrollBtn2 = document.createElement("button");
+                scrollBtn2.innerHTML = "1:1";
+                scrollBtn2.setAttribute("id", "scroll-btn2");
+                document.body.appendChild(scrollBtn2);
+                scrollBtn2.classList.add("show");
+                scrollBtn2.addEventListener("click", function(){
+                    location.href='<c:url value="/websocket"/>';
+                });
+            }
+        };
+        $(function(){
+            chatbtn.init();
+        });
+    </script>
 </head>
 <body>
 
 <div class="jumbotron text-center" style="margin-bottom:0">
-    <h1>My First Bootstrap 4 Page</h1>
-
-    <img src="<c:url value='/img/sm.jpg'/>">
-    <img src="<c:url value='/imgs/car.jpg'/>">
-
+    <h1><spring:message code="site.title"/></h1>
+    <h4><spring:message code="site.tel" arguments="041-312-3234"/></h4>
+    <img src="<c:url value="/img/sm.jpg"/> ">
+    <img src="<c:url value="/imgs/car.jpg"/> ">
     <p>Resize this responsive page to see the effect!</p>
 </div>
 <ul class="nav justify-content-end">
@@ -70,9 +131,7 @@
         </c:otherwise>
     </c:choose>
 
-    <%--    <li class="nav-item">--%>
-    <%--        <a class="nav-link disabled" href="#">Disabled</a>--%>
-    <%--    </li>--%>
+
 </ul>
 <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
     <a class="navbar-brand" href="<c:url value="/" /> ">Navbar</a>
@@ -93,16 +152,24 @@
             <li class="nav-item">
                 <a class="nav-link" href="<c:url value="/chart"/> ">Chart</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="<c:url value="/car"/> ">Car</a>
-            </li>
-
             <c:if test="${sessionScope.loginid != null}">
                 <li class="nav-item">
                     <a class="nav-link" href="<c:url value="/cust"/> ">Cust</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="<c:url value="/item"/> ">Item</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="<c:url value="/webcam"/> ">WebCam</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="<c:url value="/websocket"/> ">websocket</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="<c:url value="/chatbot"/> ">chatBot</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="<c:url value="/webrtc"/> ">webrtc</a>
                 </li>
             </c:if>
         </ul>

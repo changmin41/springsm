@@ -6,7 +6,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-//일반 컨트롤러는 화면을 보내줘야한다.
 @Slf4j
 @RequestMapping("/chart")
 public class ChartController {
@@ -35,13 +34,6 @@ public class ChartController {
     public String chart3(Model model) {
         model.addAttribute("left",dir+"left");
         model.addAttribute("center",dir+"chart3");
-        return "index";
-    }
-
-    @RequestMapping("/chart9")
-    public String chart9(Model model) {
-        model.addAttribute("left",dir+"left");
-        model.addAttribute("center",dir+"chart9");
         return "index";
     }
 }

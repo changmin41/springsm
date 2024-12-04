@@ -8,13 +8,15 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.FileNotFoundException;
 import java.io.FileReader;
-
+import java.util.Random;
 
 @RestController
 @Slf4j
 @RequestMapping("/charts")
 public class ChartsRestController {
+
     @Value("${app.dir.readlogdir}")
     String readlogdir;
 
@@ -59,16 +61,4 @@ public class ChartsRestController {
         log.info(result.toJSONString());
         return result;
     }
-
-
-    @RequestMapping("/chart2")
-    public Object chart2() {
-
-
-        return null;
-    }
-
-
 }
-
-

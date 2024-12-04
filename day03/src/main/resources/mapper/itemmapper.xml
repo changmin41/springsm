@@ -9,6 +9,21 @@
         SELECT * FROM item WHERE item_name LIKE CONCAT('%', #{name}, '%')
     </select>
 
+    <select id="getfindpage" resultType="itemDto" parameterType="search">
+        SELECT * FROM item WHERE 1=1
+        <if test="keyword == 'name'">
+            AND item_name LIKE CONCAT('%', #{search}, '%')
+        </if>
+    </select>
+
+    <select id="getpage" resultType="itemDto">
+        SELECT * FROM item
+    </select>
+
+
+
+
+
 
     <select id="selectOne" parameterType="Integer" resultType="itemDto">
         SELECT * FROM item WHERE item_id=#{id}

@@ -14,7 +14,7 @@ spring:
       suffix: .jsp
   datasource:
     driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
-    url: jdbc:log4jdbc:mysql://127.0.0.1:3306/smdb?characterEncoding=utf8
+    url: jdbc:log4jdbc:mysql://127.1.0.1:3306/smdb?characterEncoding=utf8
     #driver-class-name: com.mysql.cj.jdbc.Driver
     #url: jdbc:mysql://127.0.0.1:3306/smdb?characterEncoding=utf8
     username: ENC(OAjB56HlNziHqNDu8ZFSAw==)
@@ -34,8 +34,19 @@ logging:
 
 # 5. Application Environment Setting
 app:
+  url:
+          #내 주소
+    server-url: http://210.119.34.210:81
+#    server-url: http://210.119.34.77:81 강사님 주소
   dir:
     imgdir: file:///c:/springsm/imgs/
+    uploadimgdir: c:/springsm/imgs/
     # logdir: /root/users/project/logs
     logdir: file:///c:/springsm/logs/
     readlogdir: c:/springsm/logs/
+  key:
+      # 주소 암호화할 때 씀 양방향 암호화할 때 (ex. 주민번호 등등)
+    algo: PBEWithMD5AndDES
+    skey: mykey
+    papago-id: m3db1o3x64
+    papago-secret: c61D3xn5gvSuXgNjdpfXTiJV11TMQYfrLhI82Tpp

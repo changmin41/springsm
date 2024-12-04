@@ -5,10 +5,13 @@ import edu.sm.app.service.CustService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import java.sql.SQLIntegrityConstraintViolationException;
 
 @Controller
 @Slf4j
@@ -16,6 +19,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class MainInputController {
 
     final CustService custService;
+    final BCryptPasswordEncoder PasswordEncoder;
+    private final BCryptPasswordEncoder passwordEncoder;
 
     @RequestMapping("/logoutimpl")
     public String logoutimpl(HttpSession session, Model model) {
@@ -43,12 +48,13 @@ public class MainInputController {
 
         }else{
             //okay
-            if(custDto.getCustPwd().equals(pwd)){
-                session.setAttribute("loginid",custDto);
+            if(passwordEncoder.matches(pwd, custDto.getCustPwd())) {
+                session.setAttribute("loginid", custDto);
                 next = "redirect:/";
-            }else{
-                model.addAttribute("center","loginfail");
+            } else {
+                model.addAttribute("center", "loginfail");
             }
+
         }
         /*if(id.equals("aaa") && pwd.equals("111")){
             session.setAttribute("loginid", id);
@@ -59,5 +65,23 @@ public class MainInputController {
         return next;
     }
 
+    @RequestMapping("/registerimpl")
+    public String registerimpl(Model model,
+                               CustDto custDto,
+                               HttpSession session) throws Exception {
+        log.info("Cust Info: "+custDto.toString());
+        try {
+            custDto.setCustPwd(PasswordEncoder.encode(custDto.getCustPwd()));
+            custService.add(custDto);
+        }catch (SQLIntegrityConstraintViolationException e){
+
+        }
+        catch (Exception e) {
+            throw e;
+        }
+        session.setAttribute("loginid",custDto);
+        model.addAttribute("center","registerok");
+        return "index";
+    }
 
 }
